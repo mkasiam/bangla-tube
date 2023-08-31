@@ -36,9 +36,11 @@ const loadVideoContentHandler = (arrayOfVideos) =>{
   videoContainer.textContent="";
     arrayOfVideos.forEach((element) => {
         const authorsInfo = element.authors[0];
+        const viewsInSecond = parseFloat(element.others.posted_date);
+        console.log(viewsInSecond);
         const div = document.createElement("div");
         div.innerHTML = `
-            <div class="flex justify-center items-center gap-5">
+            <div class="flex justify-center items-center">
             <div class="max-w-md rounded-lg overflow-hidden shadow-lg bg-white">
               <div class="relative">
                 <img src="${element.thumbnail}" alt="Video Thumbnail" class="w-full h-48 object-cover">

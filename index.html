@@ -27,28 +27,49 @@
   <body class="font-inter container mx-auto">
     <header>
       <nav
-        class="flex flex-wrap justify-between items-center border border-black my-2 md:my-4 lg:my-4"
+        class="flex flex-col md:flex-row lg:flex-row justify-between items-center my-2 md:my-4 lg:my-4 space-y-3 md:space-y-0 lg:space-y-0"
       >
-        <div><img src="./Images/Logo.png" alt="" /></div>
-        <div>
-          <p
-            id="sort-by-view"
-            class="bg-[#25252533] text-xl font-bold px-5 py-2 rounded-sm"
-          >
-            Sort by view
-          </p>
+        <div class="flex-1">
+          <img src="./Images/Logo.png" alt="" />
         </div>
-        <div>
-          <button
-            id="blog-btn"
-            class="bg-[#FF1F3D] text-xl font-bold px-5 py-2 rounded-sm"
-          >
-            Blog
-          </button>
+        <div class="flex justify-between flex-auto">
+          <!-- Sort by View  -->
+          <div>
+            <p
+              id="sort-by-view"
+              class="bg-[#25252533] text-sm md:text-sm lg:text-xl font-bold px-3 md:px-4 lg:px-5 py-2 rounded-sm"
+            >
+              Sort by view
+            </p>
+          </div>
+          <!-- Blog Area -->
+          <div>
+            <button
+              id="blog-btn"
+              class="bg-[#FF1F3D] text-sm md:text-sm lg:text-xl font-bold px-3 md:px-4 lg:px-5 py-2 rounded-sm"
+            >
+              Blog
+            </button>
+          </div>
         </div>
       </nav>
       <hr />
+      <!-- This is tab section  -->
+      <section>
+        <div
+          id="tab-container"
+          class="tabs tabs-boxed flex flex-wrap justify-center my-2 md:my-3 lg:my-5"
+        ></div>
+      </section>
     </header>
+    <main>
+      <section>
+        <div
+          id="video-container"
+          class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4"
+        ></div>
+      </section>
+    </main>
     <script src="./js/index.js"></script>
   </body>
 </html>

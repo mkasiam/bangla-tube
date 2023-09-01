@@ -55,12 +55,24 @@ const loadVideoContentHandler = (arrayOfVideos) => {
   else{
     arrayOfVideos.forEach((element) => {
       const authorsInfo = element.authors[0];
-      // const views = element.others.views;
-      // sortByView(views);
       let postedDateInSeconds = parseFloat(element.others.posted_date);
       postedDateInSeconds = secondsToHoursMinute(postedDateInSeconds);
       const verifiedCheck = authorsInfo?.verified;
+      /* if(verifiedCheck === false || verifiedCheck ==="" || verifiedCheck === null ||
+      verifiedCheck === undefined){
+        console.log("you are culprit")
+      }
+      else if(verifiedCheck === true){
+        const verifiedFieldElement = document.getElementById("verifiedBadge");
+        const div = document.createElement("div");
+        div.innerHTML=`
+        <h1>Badge</h1>
+        `
+        verifiedFieldElement.appendChild(div);
+        console.log("I need only truth")
+      } */
       const div = document.createElement("div");
+      div.classList.add("m-2");
       div.innerHTML = `
               <div class="flex justify-center items-center">
               <div class="max-w-md rounded-lg overflow-hidden shadow-lg bg-white">
@@ -81,7 +93,9 @@ const loadVideoContentHandler = (arrayOfVideos) => {
                       <h2 class="text-xl font-semibold">${element.title}</h2>
                       <div class="flex items-center mt-1 gap-2">
                       <p class="text-gray-600">${authorsInfo.profile_name}</p>
-                      <div id="verifiedBadge" >${verifiedCheck}</div>
+                      <div>
+                      ${verifiedCheck === true ? '<div><img class="badge-img" src="./Images/blue-badge.png"/></div>' : ''}
+                      </div>
                       </div>
                       <p class="text-gray-500">${element.others.views}</p>
                     </div>
@@ -102,7 +116,8 @@ seconds into Hours and Minutes  */
 function secondsToHoursMinute(seconds) {
   if (isNaN(seconds)) {
     return;
-  } else {
+  }
+   else {
     const hr = Math.floor(seconds / 3600);
     const min = Math.floor((seconds % 3600) / 60);
 
@@ -141,13 +156,9 @@ sortButton.addEventListener("click", sortVideosByViews);
 
 
 
-// ...
 
 
-// function sortByView(viewsPerVideo){
-  // console.log(viewsPerVideo);
-  // const sortByViewElement = document.getElementById("sort-by-view");
-// }
+
 
 
 // calling load data function

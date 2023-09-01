@@ -102,6 +102,12 @@ function secondsToHoursMinute(seconds) {
 function verifiedBadgeHandler(isVerified){
   
   const verifiedBadgeContainer = document.getElementById("verifiedBadge");
+  if(isVerified === true){
+    verifiedBadgeContainer.classList.remove("hidden");
+  }
+  else{
+    verifiedBadgeContainer.classList.add("hidden");
+  }
   
   
 

@@ -8,3 +8,11 @@
   background-color: red;
   color: white;
 }
+.sp-color {
+  background: #6e7176;
+  color: black;
+  font: bold;
+  opacity: 0.3;
+  padding: 4px;
+  border-radius: 8px;
+}

@@ -1,11 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-theme="cupcake" lang="en">
   <head>
+    <!-- Link with daisy UI and tailwind css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@3.6.4/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font from google Font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Js Blog</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <h1>Hello world</h1>
+  <body class="font-inter">
+    <!--header section start -->
+    <header>
+      <h1
+        class="text-xl md:text-2xl lg:text-4xl text-center font-semibold text-gray-600 my-7"
+      >
+        Welcome to Blog section
+      </h1>
+    </header>
+    <!-- Header section End  -->
+    <main class="container mx-auto">
+      <!-- Accordion start  -->
+      <section class="space-y-3">
+        <div class="collapse collapse-arrow bg-base-200">
+          <input type="radio" name="my-accordion-2" checked="checked" />
+          <!-- Fist question -->
+          <div class="collapse-title text-xl font-medium">
+            Discuss the scope of <span class="sp-color"> var </span>,<span
+              class="sp-color"
+            >
+              let </span
+            >, and <span class="sp-color">const</span>
+          </div>
+          <div class="collapse-content">
+            <p>hello</p>
+          </div>
+        </div>
+        <div class="collapse collapse-arrow bg-base-200">
+          <input type="radio" name="my-accordion-2" />
+          <!-- Second Question  -->
+          <div class="collapse-title text-xl font-medium">
+            Tell us the use cases of <span class="sp-color"> null </span> and
+            <span class="sp-color"> undefined </span>
+          </div>
+          <div class="collapse-content">
+            <p>hello</p>
+          </div>
+        </div>
+        <div class="collapse collapse-arrow bg-base-200">
+          <input type="radio" name="my-accordion-2" />
+          <!-- Third Question  -->
+          <div class="collapse-title text-xl font-medium">
+            What do you mean by REST API?
+          </div>
+          <div class="collapse-content">
+            <p>hello</p>
+          </div>
+        </div>
+      </section>
+    </main>
   </body>
 </html>

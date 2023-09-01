@@ -110,6 +110,38 @@ function secondsToHoursMinute(seconds) {
   }
 }
 
+const loadDefaultVideoContent = async () => {
+  await findContentHandler(); // Load the default content.
+};
+
+loadDefaultVideoContent();
+
+const sortVideosByViews = () => {
+  const videoContainer = document.getElementById("video-container");
+  const videos = Array.from(videoContainer.children); // Convert the videos to an array for sorting
+
+  videos.sort((a, b) => {
+    // Extract the view counts from the videos
+    const viewCountA = parseInt(a.querySelector(".text-gray-500").textContent, 10);
+    const viewCountB = parseInt(b.querySelector(".text-gray-500").textContent, 10);
+
+    // Compare view counts in descending order
+    return viewCountB - viewCountA;
+  });
+
+  // Reattach sorted videos to the video container
+  videos.forEach((video) => {
+    videoContainer.appendChild(video);
+  });
+};
+
+// Add click event listener to the "Sort by view" button
+const sortButton = document.getElementById("sort-by-view");
+sortButton.addEventListener("click", sortVideosByViews);
+
+// ...
+
+
 // function sortByView(viewsPerVideo){
   // console.log(viewsPerVideo);
   // const sortByViewElement = document.getElementById("sort-by-view");

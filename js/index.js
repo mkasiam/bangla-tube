@@ -21,7 +21,7 @@ const showCategory = (dataInfo) => {
   });
 };
 // Loading videos when the any video category is clicked
-const findContentHandler = async (categoryId) => {
+const findContentHandler = async (categoryId="1000") => {
   const response = await fetch(
     `https://openapi.programming-hero.com/api/videos/category/${categoryId}`
   );
@@ -31,13 +31,14 @@ const findContentHandler = async (categoryId) => {
 };
 
 const loadVideoContentHandler = (arrayOfVideos) => {
-  const emptyContainer = document.getElementById("empty-video-container");
-  emptyContainer.textContent = "";
+  const videoContainer = document.getElementById("video-container");
+  videoContainer.textContent = "";
   if(arrayOfVideos.length === 0){
     const div = document.createElement("div");
+    div.classList.add("col-span-4");
     div.innerHTML=`
     <div
-      class="flex flex-col justify-center items-center text-center mt-5 md:mt-10 lg:mt-18"
+      class=" flex flex-col justify-center items-center text-center mt-5 md:mt-10 lg:mt-18"
     >
       <div><img src="./Images/Icon.png" alt="" /></div>
       <div>
@@ -48,16 +49,16 @@ const loadVideoContentHandler = (arrayOfVideos) => {
       </div>
     </div>
     `
-    emptyContainer.appendChild(div);
+    videoContainer.appendChild(div);
 
   }
   else{
-    const videoContainer = document.getElementById("video-container");
-    videoContainer.textContent = "";
     arrayOfVideos.forEach((element) => {
       const authorsInfo = element.authors[0];
-      let viewsInSecond = parseFloat(element.others.posted_date);
-      viewsInSecond = secondsToHoursMinute(viewsInSecond);
+      // const views = element.others.views;
+      // sortByView(views);
+      let postedDateInSeconds = parseFloat(element.others.posted_date);
+      postedDateInSeconds = secondsToHoursMinute(postedDateInSeconds);
       const verifiedCheck = authorsInfo?.verified;
       const div = document.createElement("div");
       div.innerHTML = `
@@ -68,7 +69,7 @@ const loadVideoContentHandler = (arrayOfVideos) => {
                     element.thumbnail
                   }" alt="Video Thumbnail" class="w-full h-48 object-cover">
                   <span class="absolute bottom-2 right-2 bg-black text-white px-2 py-1 rounded opacity-75">${
-                    viewsInSecond ? viewsInSecond : ""
+                    postedDateInSeconds ? postedDateInSeconds : ""
                   }</span>
                 </div>
                 <div class="p-4">
@@ -91,6 +92,7 @@ const loadVideoContentHandler = (arrayOfVideos) => {
               `;
   
       videoContainer.appendChild(div);
+      
     });
   }
   // console.log(arrayOfVideos);
@@ -108,7 +110,10 @@ function secondsToHoursMinute(seconds) {
   }
 }
 
-
+// function sortByView(viewsPerVideo){
+  // console.log(viewsPerVideo);
+  // const sortByViewElement = document.getElementById("sort-by-view");
+// }
 
 
 // calling load data function

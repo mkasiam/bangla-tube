@@ -1,10 +1,11 @@
-//loading data from the api
+//loading categories data from the api
 const loadDataHandler = async () => {
   const response = await fetch(
     "https://openapi.programming-hero.com/api/videos/categories"
   );
   const data = await response.json();
   const dataInfo = data.data;
+  // calling showCategory function for getting tab name
   showCategory(dataInfo);
 };
 // Showing Tab name according to the api object dynamically
@@ -13,7 +14,6 @@ const showCategory = (dataInfo) => {
   dataInfo.forEach((category) => {
     const div = document.createElement("div");
     div.innerHTML = `
-        
         <a onclick="findContentHandler('${category.category_id}')" id="${category.category_id}" class="tab font-semibold">${category.category}</a>
         `;
     tabContainer.appendChild(div);
@@ -21,18 +21,22 @@ const showCategory = (dataInfo) => {
 };
 // Loading videos when the any video category is clicked
 const findContentHandler = async (categoryId="1000") => {
+  //fetching data according to the categoryId
   const response = await fetch(
     `https://openapi.programming-hero.com/api/videos/category/${categoryId}`
   );
   const data = await response.json();
   const arrayOfVideos = data?.data;
+  //calling loadVideoContentHandler() function to show the video
   loadVideoContentHandler(arrayOfVideos);
+  //calling setActiveTab() function and passing id so that I can show active tab
   setActiveTab(categoryId);
 };
 
 const loadVideoContentHandler = (arrayOfVideos) => {
   const videoContainer = document.getElementById("video-container");
   videoContainer.textContent = "";
+  //Condition if length of array is zero
   if(arrayOfVideos.length === 0){
     const div = document.createElement("div");
     div.classList.add("col-span-4");
@@ -55,8 +59,11 @@ const loadVideoContentHandler = (arrayOfVideos) => {
   else{
     arrayOfVideos.forEach((element) => {
       const authorsInfo = element.authors[0];
+      // getting initial postedDateInSeconds
       let postedDateInSeconds = parseFloat(element.others.posted_date);
+      // updating the postedDateInSeconds according to the function
       postedDateInSeconds = secondsToHoursMinute(postedDateInSeconds);
+      //declaring verifiedCheck
       const verifiedCheck = authorsInfo?.verified;
       const div = document.createElement("div");
       div.classList.add("m-2","cursor-pointer");
@@ -78,9 +85,9 @@ const loadVideoContentHandler = (arrayOfVideos) => {
                       authorsInfo?.profile_picture
                     }" alt="Author Profile" class="w-10 h-10 rounded-full">
                     <div class="ml-2">
-                      <h2 class="text-xl font-semibold">${element.title}</h2>
+                      <h2 class="text-lg md:text-lg lg:text-xl font-semibold">${element.title}</h2>
                       <div class="flex items-center mt-1 gap-2">
-                      <p class="text-gray-600">${authorsInfo.profile_name}</p>
+                      <p class="text-lg text-gray-600">${authorsInfo.profile_name}</p>
                       <div>
                       ${verifiedCheck === true ? '<div><img class="badge-img" src="./Images/blue-badge.png"/></div>' : ''}
                       </div>
@@ -97,11 +104,11 @@ const loadVideoContentHandler = (arrayOfVideos) => {
       
     });
   }
-  // console.log(arrayOfVideos);
 };
-/* Function for show How many times ago the video was posted converting the 
+/* Function for show How many times ago the video was posted , converting the 
 seconds into Hours and Minutes  */
 function secondsToHoursMinute(seconds) {
+  // setting condition if seconds is NaN , if it's true than return
   if (isNaN(seconds)) {
     return;
   }
@@ -112,23 +119,25 @@ function secondsToHoursMinute(seconds) {
     return `${hr} hrs ${min} min ago`;
   }
 }
-
+// Function for loading default content for id="1000"
 const loadDefaultVideoContent = async () => {
-  await findContentHandler(); // Load the default content.
+  await findContentHandler(); 
 };
-
+// Calling loadDefaultVideoContent() function
 loadDefaultVideoContent();
 
+
+// function for sorting videos according to their views
 const sortVideosByViews = () => {
   const videoContainer = document.getElementById("video-container");
-  const videos = Array.from(videoContainer.children); // Convert the videos to an array for sorting
+  const videos = Array.from(videoContainer.children); // Converting the videos to an array for sorting
 
   videos.sort((a, b) => {
-    // Extract the view counts from the videos
+    // Extracting the view 
     const viewCountA = parseInt(a.querySelector(".text-gray-500").textContent, 10);
     const viewCountB = parseInt(b.querySelector(".text-gray-500").textContent, 10);
 
-    // Compare view counts in descending order
+    // Comparing the views in descending order
     return viewCountB - viewCountA;
   });
 
@@ -138,8 +147,13 @@ const sortVideosByViews = () => {
   });
 };
 
+// Add click event listener to the "Sort by view" button
+const sortButton = document.getElementById("sort-by-view");
+sortButton.addEventListener("click", sortVideosByViews);
 
-// Add an active class to the clicked tab and remove it from other tabs
+
+
+// Add an active class to the clicked tab , and remove it from other tabs
 const setActiveTab = (tabId) => {
   const tabs = document.querySelectorAll('.tab');
   tabs.forEach((tab) => {
@@ -152,10 +166,6 @@ const setActiveTab = (tabId) => {
 };
 
 
-// Add click event listener to the "Sort by view" button
-const sortButton = document.getElementById("sort-by-view");
-sortButton.addEventListener("click", sortVideosByViews);
-
 const blogButton = document.getElementById("blog-btn");
 
 // Add a click event listener to the button
@@ -163,5 +173,5 @@ blogButton.addEventListener("click", function () {
   window.open("blog.html", "_blank");
 });
 
-// calling load data function
+// calling load data function for loading categories data
 loadDataHandler();

@@ -26,51 +26,74 @@ const findContentHandler = async (categoryId) => {
     `https://openapi.programming-hero.com/api/videos/category/${categoryId}`
   );
   const data = await response.json();
-  const arrayOfVideos = data.data;
+  const arrayOfVideos = data?.data;
   loadVideoContentHandler(arrayOfVideos);
 };
 
 const loadVideoContentHandler = (arrayOfVideos) => {
-  const videoContainer = document.getElementById("video-container");
-  videoContainer.textContent = "";
-  arrayOfVideos.forEach((element) => {
-    const authorsInfo = element.authors[0];
-    let viewsInSecond = parseFloat(element.others.posted_date);
-    viewsInSecond = secondsToHoursMinute(viewsInSecond);
-    const verifiedCheck = authorsInfo?.verified;
+  const emptyContainer = document.getElementById("empty-video-container");
+  emptyContainer.textContent = "";
+  if(arrayOfVideos.length === 0){
     const div = document.createElement("div");
-    div.innerHTML = `
-            <div class="flex justify-center items-center">
-            <div class="max-w-md rounded-lg overflow-hidden shadow-lg bg-white">
-              <div class="relative">
-                <img src="${
-                  element.thumbnail
-                }" alt="Video Thumbnail" class="w-full h-48 object-cover">
-                <span class="absolute bottom-2 right-2 bg-black text-white px-2 py-1 rounded opacity-75">${
-                  viewsInSecond ? viewsInSecond : ""
-                }</span>
-              </div>
-              <div class="p-4">
-                <div class="flex items-center">
+    div.innerHTML=`
+    <div
+      class="flex flex-col justify-center items-center text-center mt-5 md:mt-10 lg:mt-18"
+    >
+      <div><img src="./Images/Icon.png" alt="" /></div>
+      <div>
+        <h1 class="text-xl md:text-2xl lg:text-4xl text-center font-semibold">
+          Oops!! Sorry, There is no <br />
+          content here
+        </h1>
+      </div>
+    </div>
+    `
+    emptyContainer.appendChild(div);
+
+  }
+  else{
+    const videoContainer = document.getElementById("video-container");
+    videoContainer.textContent = "";
+    arrayOfVideos.forEach((element) => {
+      const authorsInfo = element.authors[0];
+      let viewsInSecond = parseFloat(element.others.posted_date);
+      viewsInSecond = secondsToHoursMinute(viewsInSecond);
+      const verifiedCheck = authorsInfo?.verified;
+      const div = document.createElement("div");
+      div.innerHTML = `
+              <div class="flex justify-center items-center">
+              <div class="max-w-md rounded-lg overflow-hidden shadow-lg bg-white">
+                <div class="relative">
                   <img src="${
-                    authorsInfo?.profile_picture
-                  }" alt="Author Profile" class="w-10 h-10 rounded-full">
-                  <div class="ml-2">
-                    <h2 class="text-xl font-semibold">${element.title}</h2>
-                    <div class="flex items-center mt-1 gap-2">
-                    <p class="text-gray-600">${authorsInfo.profile_name}</p>
-                    <div id="verifiedBadge" >${verifiedCheck}</div>
+                    element.thumbnail
+                  }" alt="Video Thumbnail" class="w-full h-48 object-cover">
+                  <span class="absolute bottom-2 right-2 bg-black text-white px-2 py-1 rounded opacity-75">${
+                    viewsInSecond ? viewsInSecond : ""
+                  }</span>
+                </div>
+                <div class="p-4">
+                  <div class="flex items-center">
+                    <img src="${
+                      authorsInfo?.profile_picture
+                    }" alt="Author Profile" class="w-10 h-10 rounded-full">
+                    <div class="ml-2">
+                      <h2 class="text-xl font-semibold">${element.title}</h2>
+                      <div class="flex items-center mt-1 gap-2">
+                      <p class="text-gray-600">${authorsInfo.profile_name}</p>
+                      <div id="verifiedBadge" >${verifiedCheck}</div>
+                      </div>
+                      <p class="text-gray-500">${element.others.views}</p>
                     </div>
-                    <p class="text-gray-500">${element.others.views}</p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-            `;
-
-    videoContainer.appendChild(div);
-  });
+              `;
+  
+      videoContainer.appendChild(div);
+    });
+  }
+  // console.log(arrayOfVideos);
 };
 /* Function for show How many times ago the video was posted converting the 
 seconds into Hours and Minutes  */

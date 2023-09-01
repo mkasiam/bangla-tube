@@ -12,12 +12,11 @@
   background: #bcc1ca;
   color: black;
   font: bold;
-  padding: 4px;
+  padding: 2px 4px;
   border-radius: 8px;
 }
 table {
   border-collapse: collapse;
-  width: 50%;
 }
 
 th,

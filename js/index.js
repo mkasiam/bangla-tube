@@ -59,7 +59,7 @@ const loadVideoContentHandler = (arrayOfVideos) => {
       postedDateInSeconds = secondsToHoursMinute(postedDateInSeconds);
       const verifiedCheck = authorsInfo?.verified;
       const div = document.createElement("div");
-      div.classList.add("m-2");
+      div.classList.add("m-2","cursor-pointer");
       div.innerHTML = `
               <div class="flex justify-center items-center">
               <div class="max-w-md rounded-lg overflow-hidden shadow-lg bg-white">

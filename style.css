@@ -4,3 +4,7 @@
 .badge-img {
   width: 18px;
 }
+.active-tab {
+  background-color: red;
+  color: white;
+}

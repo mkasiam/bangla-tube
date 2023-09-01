@@ -11,11 +11,10 @@ const loadDataHandler = async () => {
 const showCategory = (dataInfo) => {
   const tabContainer = document.getElementById("tab-container");
   dataInfo.forEach((category) => {
-    // console.log(category);
     const div = document.createElement("div");
     div.innerHTML = `
         
-        <a onclick="findContentHandler('${category.category_id}')" class="tab font-semibold">${category.category}</a>
+        <a onclick="findContentHandler('${category.category_id}')" id="${category.category_id}" class="tab font-semibold">${category.category}</a>
         `;
     tabContainer.appendChild(div);
   });
@@ -28,6 +27,7 @@ const findContentHandler = async (categoryId="1000") => {
   const data = await response.json();
   const arrayOfVideos = data?.data;
   loadVideoContentHandler(arrayOfVideos);
+  setActiveTab(categoryId);
 };
 
 const loadVideoContentHandler = (arrayOfVideos) => {
@@ -58,19 +58,6 @@ const loadVideoContentHandler = (arrayOfVideos) => {
       let postedDateInSeconds = parseFloat(element.others.posted_date);
       postedDateInSeconds = secondsToHoursMinute(postedDateInSeconds);
       const verifiedCheck = authorsInfo?.verified;
-      /* if(verifiedCheck === false || verifiedCheck ==="" || verifiedCheck === null ||
-      verifiedCheck === undefined){
-        console.log("you are culprit")
-      }
-      else if(verifiedCheck === true){
-        const verifiedFieldElement = document.getElementById("verifiedBadge");
-        const div = document.createElement("div");
-        div.innerHTML=`
-        <h1>Badge</h1>
-        `
-        verifiedFieldElement.appendChild(div);
-        console.log("I need only truth")
-      } */
       const div = document.createElement("div");
       div.classList.add("m-2");
       div.innerHTML = `
@@ -80,9 +67,10 @@ const loadVideoContentHandler = (arrayOfVideos) => {
                   <img src="${
                     element.thumbnail
                   }" alt="Video Thumbnail" class="w-full h-48 object-cover">
-                  <span class="absolute bottom-2 right-2 bg-black text-white px-2 py-1 rounded opacity-75">${
-                    postedDateInSeconds ? postedDateInSeconds : ""
-                  }</span>
+                  ${postedDateInSeconds ? 
+                    `<span class="absolute bottom-2 right-2 bg-black text-white px-2 py-1 rounded opacity-75">${postedDateInSeconds}</span>` 
+                    : ''
+                  }
                 </div>
                 <div class="p-4">
                   <div class="flex items-center">
@@ -150,16 +138,30 @@ const sortVideosByViews = () => {
   });
 };
 
+
+// Add an active class to the clicked tab and remove it from other tabs
+const setActiveTab = (tabId) => {
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach((tab) => {
+    if (tab.id === tabId) {
+      tab.classList.add('active-tab');
+    } else {
+      tab.classList.remove('active-tab');
+    }
+  });
+};
+
+
 // Add click event listener to the "Sort by view" button
 const sortButton = document.getElementById("sort-by-view");
 sortButton.addEventListener("click", sortVideosByViews);
 
+const blogButton = document.getElementById("blog-btn");
 
-
-
-
-
-
+// Add a click event listener to the button
+blogButton.addEventListener("click", function () {
+  window.open("blog.html", "_blank");
+});
 
 // calling load data function
 loadDataHandler();

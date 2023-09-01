@@ -139,6 +139,8 @@ const sortVideosByViews = () => {
 const sortButton = document.getElementById("sort-by-view");
 sortButton.addEventListener("click", sortVideosByViews);
 
+
+
 // ...
 
 
